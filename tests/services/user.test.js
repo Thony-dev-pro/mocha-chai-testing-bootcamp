@@ -21,4 +21,21 @@ describe('User', () => {
       });
     });
   });
+
+  describe('getUserWithPromise', () => {
+    it('devrait retourner un utilisateur avec un ID valide', async () => {
+      const user = await User.getUserWithPromise(1);
+      expect(user).to.have.property('id', 1);
+      expect(user).to.have.property('name', 'Utilisateur 1');
+    });
+
+    it('devrait rejeter avec un ID invalide', async () => {
+      try {
+        await User.getUserWithPromise(0);
+      } catch (err) {
+        expect(err).to.be.an('error');
+        expect(err.message).to.equal('ID invalide');
+      }
+    });
+  });
 });
